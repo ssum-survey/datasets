@@ -1,0 +1,844 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "generated_utc": "2025-08-21T00:00:00Z",
+    "legend": {
+      "flags": {
+        "unavailable_since_2024_12": "Unavailable since 12/2024 due to widespread video removals; no redistribution.",
+        "repro_docs_missing": "Lacks documentation on included talks, hindering reproduction.",
+        "repro_hard_ted_resources": "Reproduction hindered; lacking documentation and TED is no longer using Amara.",
+        "unavailable_since_2023_12": "Unavailable since 12/2023 due to resource constraints.",
+        "partial_partitions": "Not all data partitions are available (only test set or no test set).",
+        "partial_lang_transcripts_only": "Partial language availability (only transcript translations).",
+        "partial_lang_summarys_only": "Partial language availability (only summary translations).",
+        "license_unknown": "No explicit license provided."
+      },
+      "modality_distribution": {
+        "direct": "Data included/distributed directly.",
+        "links_or_script_only": "Only a download script or source links are provided, not the data."
+      }
+    }
+  },
+  "datasets": [
+    {
+      "name": "How2",
+      "url": "https://github.com/srvk/how2-dataset",
+      "reference": ["sanabria_how2_2018"],
+      "category": "General",
+      "domain": "Instructional videos (YouTube)",
+      "languages": ["EN", "PT"],
+      "language_notes": "Partial language availability (only transcript translations).",
+      "size": {
+        "raw": "80k videos (2k hours)",
+        "items": 80000,
+        "items_unit": "videos",
+        "hours": 2000
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["video descriptions"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "links_or_script_only"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": "CC-BY-SA-4.0",
+      "flags": ["unavailable_since_2024_12", "partial_lang_transcripts_only"]
+    },
+    {
+      "name": "YTSeg",
+      "url": "https://huggingface.co/datasets/retkowski/ytseg",
+      "reference": ["retkowski_text_2024"],
+      "category": "General",
+      "domain": "YouTube videos (various types/topics)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "19.3k videos (6.5k hours)",
+        "items": 19300,
+        "items_unit": "videos",
+        "hours": 6500
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["segment-based", "chapter titles"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": "CC-BY-NC-SA-4.0",
+      "flags": []
+    },
+    {
+      "name": "MMSum",
+      "url": "https://github.com/Jielin-Qiu/MMSum_model",
+      "reference": ["qiu_mmsum_2024"],
+      "category": "General",
+      "domain": "YouTube videos (various types/topics)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "5.1k videos (1.2k hours)",
+        "items": 5100,
+        "items_unit": "videos",
+        "hours": 1200
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["segment-based", "chapter titles", "thumbnails"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "links_or_script_only"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": "CC-BY-NC-SA",
+      "flags": []
+    },
+    {
+      "name": "VT-SSum",
+      "url": "https://github.com/Dod-o/VT-SSum",
+      "reference": ["lv_vt-ssum_2021"],
+      "category": "General",
+      "domain": "Lecture videos (VideoLectures.net)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "9.6k videos",
+        "items": 9600,
+        "items_unit": "videos"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["segment-based", "slide text"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "ASR"},
+        "audio": {"available": true, "distribution": "links_or_script_only"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": "CC-BY-NC-ND-4.0",
+      "flags": []
+    },
+    {
+      "name": "NUTSHELL",
+      "url": "https://huggingface.co/datasets/maikezu/nutshell",
+      "reference": ["zufle_nutshell_2025"],
+      "category": "General",
+      "domain": "Conference talks (*ACL talks)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "6.3k talks (1.2k hours)",
+        "items": 6300,
+        "items_unit": "talks",
+        "hours": 1200
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["paper abstracts"]
+      },
+      "modalities": {
+        "transcript": {"available": false, "reason": "not_provided"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": "CC-BY-4.0",
+      "flags": []
+    },
+    {
+      "name": "MCIF",
+      "url": "https://huggingface.co/papers/2507.19634",
+      "reference": ["papi2025mcifmultimodalcrosslingualinstructionfollowing"],
+      "category": "General",
+      "domain": "Conference talks (*ACL talks)",
+      "languages": ["EN", "DE", "IT", "ZH"],
+      "language_notes": "Partial language availability (only summary translations).",
+      "size": {
+        "raw": "100 talks (9.5 hours)",
+        "items": 100,
+        "items_unit": "talks",
+        "hours": 9.5
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["paper abstracts"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": true, "distribution": "direct"}
+      },
+      "license": "CC-BY-4.0",
+      "flags": ["partial_partitions", "partial_lang_summarys_only"]
+    },
+    {
+      "name": "VISTA",
+      "url": "https://github.com/dongqi-me/VISTA",
+      "reference": ["liu_what_2025"],
+      "category": "General",
+      "domain": "Conference talks (AI venues)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "18.6k talks (2.1k hours)",
+        "items": 18600,
+        "items_unit": "talks",
+        "hours": 2100
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["paper abstracts"]
+      },
+      "modalities": {
+        "transcript": {"available": false, "reason": "not_provided"},
+        "audio": {"available": true, "distribution": "links_or_script_only"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["license_unknown"]
+    },
+    {
+      "name": "SLUE-TED",
+      "url": "https://huggingface.co/datasets/asapp/slue-phase-2",
+      "reference": ["shon_slue_2023"],
+      "category": "General",
+      "domain": "TED talks",
+      "languages": ["EN"],
+      "size": {
+        "raw": "4.2k talks (829 hours)",
+        "items": 4200,
+        "items_unit": "talks",
+        "hours": 829
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["talk descriptions"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": "CC-BY-NC-ND-4.0",
+      "flags": []
+    },
+    {
+      "name": "TEDSummary",
+      "url": "https://github.com/nttcslab-sp-admin/TEDSummary",
+      "reference": ["kano_attention-based_2021"],
+      "category": "General",
+      "domain": "TED talks",
+      "languages": ["EN"],
+      "size": {
+        "raw": "1.5k talks",
+        "items": 1500,
+        "items_unit": "talks"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["talk descriptions"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "links_or_script_only"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["repro_docs_missing", "license_unknown"]
+    },
+    {
+      "name": "TED Talk Teasers",
+      "url": "https://github.com/GianlucaVico/ted-summarization",
+      "reference": ["vico_ted_2022"],
+      "category": "General",
+      "domain": "TED talks",
+      "languages": ["EN"],
+      "size": {
+        "raw": "2.8k talks (739 hours)",
+        "items": 2800,
+        "items_unit": "talks",
+        "hours": 739
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["talk descriptions"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "links_or_script_only"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": "CC-BY-NC-ND-4.0",
+      "flags": ["repro_hard_ted_resources"]
+    },
+    {
+      "name": "StreamHover",
+      "url": "https://github.com/ucfnlp/streamhover",
+      "reference": ["cho_streamhover_2021"],
+      "category": "General",
+      "domain": "Livestreams (Behance.net)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "370 videos (500 hours)",
+        "items": 370,
+        "items_unit": "videos",
+        "hours": 500
+      },
+      "summary_type": {
+        "styles": ["Abstractive", "Extractive"],
+        "details": ["crowdsourced", "clip-level & video-level"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "ASR"},
+        "audio": {"available": true, "distribution": "links_or_script_only"},
+        "video": {"available": true, "distribution": "links_or_script_only"}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["license_unknown"]
+    },
+    {
+      "name": "MediaSum",
+      "url": "https://github.com/zcgzcgzcg1/MediaSum",
+      "reference": ["zhu_mediasum_2021"],
+      "category": "General",
+      "domain": "Media interviews (NPR, CNN)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "463.6k interview segments",
+        "items": 463600,
+        "items_unit": "interview_segments"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["topic descriptions"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["license_unknown"]
+    },
+    {
+      "name": "SummScreen",
+      "url": "https://github.com/mingdachen/SummScreen",
+      "reference": ["chen_summscreen_2022"],
+      "category": "General",
+      "domain": "TV show transcripts",
+      "languages": ["EN"],
+      "size": {
+        "raw": "26k episodes",
+        "items": 26000,
+        "items_unit": "episodes"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["episode recaps"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["license_unknown"]
+    },
+    {
+      "name": "Spotify Podcast Dataset",
+      "url": "https://podcastsdataset.byspotify.com/",
+      "reference": ["clifton_100000_2020", "garmash_cem_2023"],
+      "category": "General",
+      "domain": "Podcast episodes",
+      "languages": ["EN", "PT"],
+      "size": {
+        "raw": "200k episodes (100k hours)",
+        "items": 200000,
+        "items_unit": "episodes",
+        "hours": 100000
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["podcast descriptions"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "ASR"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": false}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["unavailable_since_2023_12", "license_unknown"]
+    },
+    {
+      "name": "AMI Meeting Corpus",
+      "url": "https://groups.inf.ed.ac.uk/ami/corpus/",
+      "reference": ["carletta_ami_2006"],
+      "category": "General",
+      "domain": "Business meetings (scenario-driven)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "137 meetings (65 hours)",
+        "items": 137,
+        "items_unit": "meetings",
+        "hours": 65
+      },
+      "summary_type": {
+        "styles": ["Abstractive", "Extractive"],
+        "details": ["minutes", "topic segments"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": true, "distribution": "direct"}
+      },
+      "license": "CC-BY-4.0",
+      "flags": []
+    },
+    {
+      "name": "ICSI Meeting Corpus",
+      "url": "https://groups.inf.ed.ac.uk/ami/icsi/",
+      "reference": ["janin_icsi_2003"],
+      "category": "General",
+      "domain": "Research group meetings (naturalistic)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "75 meetings (72 hours)",
+        "items": 75,
+        "items_unit": "meetings",
+        "hours": 72
+      },
+      "summary_type": {
+        "styles": ["Abstractive", "Extractive"],
+        "details": ["minutes", "topic segments"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": false}
+      },
+      "license": "CC-BY-4.0",
+      "flags": []
+    },
+    {
+      "name": "QMSum",
+      "url": "https://github.com/Yale-LILY/QMSum",
+      "reference": ["zhong_qmsum_2021"],
+      "category": "General",
+      "domain": "AMI, ICSI & Committee meetings",
+      "languages": ["EN"],
+      "size": {
+        "raw": "232 meetings",
+        "items": 232,
+        "items_unit": "meetings"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["query-based", "multiple", "topic segments"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": "MIT",
+      "flags": []
+    },
+    {
+      "name": "ELITR Minuting Corpus",
+      "url": "https://ufal.mff.cuni.cz/elitr-minuting-corpus",
+      "reference": ["nedoluzhko_elitr_2022"],
+      "category": "General",
+      "domain": "Technical project & parliament meetings (naturalistic)",
+      "languages": ["EN", "CS"],
+      "size": {
+        "raw": "166 meetings (160 hours)",
+        "items": 166,
+        "items_unit": "meetings",
+        "hours": 160
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["minutes", "multiple"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": "CC-BY-NC-SA-4.0",
+      "flags": []
+    },
+    {
+      "name": "DialogSum",
+      "url": "https://huggingface.co/datasets/knkarthick/dialogsum",
+      "reference": ["chen_dialogsum_2021"],
+      "category": "General",
+      "domain": "Diverse, spoken dialogues (EN-practicing scenarios)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "13.4k dialogues",
+        "items": 13400,
+        "items_unit": "dialogues"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["crowdsourced"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": "CC-BY-NC-SA-4.0",
+      "flags": []
+    },
+    {
+      "name": "MeetingBank",
+      "url": "https://meetingbank.github.io/",
+      "reference": ["hu_meetingbank_2023"],
+      "category": "General",
+      "domain": "City council meetings (naturalistic)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "1.3k meetings (3.5k hours)",
+        "items": 1300,
+        "items_unit": "meetings",
+        "hours": 3500
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["segment-level minutes"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "ASR"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": false}
+      },
+      "license": "CC-BY-NC-ND-4.0",
+      "flags": []
+    },
+    {
+      "name": "EuroParlMin",
+      "url": "https://github.com/ufal/europarlmin",
+      "reference": ["ghosal_overview_2023"],
+      "category": "General",
+      "domain": "Parliament meetings (naturalistic)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "2.2k sessions (1.8k hours)",
+        "items": 2200,
+        "items_unit": "sessions",
+        "hours": 1800
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["minutes"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["partial_partitions", "license_unknown"]
+    },
+    {
+      "name": "EuroParl Interviews",
+      "url": "https://mt.fbk.eu/europarl-interviews/",
+      "reference": ["papi-etal-2023-direct-speech"],
+      "category": "General",
+      "domain": "Parliament meetings (naturalistic)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "12 videos (1 hour)",
+        "items": 12,
+        "items_unit": "videos",
+        "hours": 1
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["sentence-level", "cross-lingual"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": true, "distribution": "direct"}
+      },
+      "license": "CC-BY-NC-4.0",
+      "flags": ["partial_partitions"]
+    },
+    {
+      "name": "ECTSum",
+      "url": "https://github.com/rajdeep345/ECTSum",
+      "reference": ["mukherjee_ectsum_2022"],
+      "category": "General",
+      "domain": "Earnings calls (The Motley Fool)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "2.4k transcripts",
+        "items": 2400,
+        "items_unit": "transcripts"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["bullet points", "from Reuters"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": "GPL-3.0",
+      "flags": []
+    },
+    {
+      "name": "MegaSSum",
+      "url": "https://huggingface.co/datasets/komats/mega-ssum",
+      "reference": ["matsuura_sentence-wise_2024"],
+      "category": "General",
+      "domain": "News articles (Gigaword, DUC2003)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "3.8M articles",
+        "items": 3800000,
+        "items_unit": "articles"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["headlines"]
+      },
+      "modalities": {
+        "transcript": {"available": false, "reason": "not_applicable_articles"},
+        "audio": {"available": false, "synthetic": true, "note": "Data synthesized rather than real recordings."},
+        "video": {"available": false}
+      },
+      "license": "CC-BY-4.0",
+      "flags": []
+    },
+
+    {
+      "name": "CSJ",
+      "url": "https://clrd.ninjal.ac.jp/csj/en/",
+      "reference": ["maekawa_corpus_2003"],
+      "category": "Non-English",
+      "domain": "Academic speech (various types)",
+      "languages": ["JA"],
+      "size": {
+        "raw": "3.3k recordings (661 hours)",
+        "items": 3300,
+        "items_unit": "recordings",
+        "hours": 661
+      },
+      "summary_type": {
+        "styles": ["Abstractive", "Extractive"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": false}
+      },
+      "license": "Paid",
+      "flags": []
+    },
+    {
+      "name": "VCSum",
+      "url": "https://github.com/hahahawu/VCSum",
+      "reference": ["wu_vcsum_2023"],
+      "category": "Non-English",
+      "domain": "Roundtable meetings (Chinese video-sharing websites)",
+      "languages": ["ZH"],
+      "size": {
+        "raw": "239 meetings (230 hours)",
+        "items": 239,
+        "items_unit": "meetings",
+        "hours": 230
+      },
+      "summary_type": {
+        "styles": ["Abstractive", "Extractive"],
+        "details": ["overall", "segment-level", "chapter titles"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "ASR"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": "MIT",
+      "flags": []
+    },
+    {
+      "name": "CLE Meeting Corpus",
+      "url": "https://github.com/farahadeeba/CLEMeetingCorpus",
+      "reference": ["sadia_meeting_2024"],
+      "category": "Non-English",
+      "domain": "Administrative & technical meetings (virtual, mostly scenario-driven)",
+      "languages": ["UR"],
+      "size": {
+        "raw": "240 meetings",
+        "items": 240,
+        "items_unit": "meetings"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["overall summaries", "multiple"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["license_unknown"]
+    },
+    {
+      "name": "MNSC",
+      "url": "https://huggingface.co/datasets/MERaLiON/Multitask-National-Speech-Corpus-v1",
+      "reference": ["he_meralion-audiollm_2025"],
+      "category": "Non-English",
+      "domain": "Conversations of various nature (IMDA NSC Corpus)",
+      "languages": ["SGE"],
+      "size": {
+        "raw": "~100 hours",
+        "hours": 100,
+        "hours_approximate": true
+      },
+      "summary_type": {
+        "styles": ["Abstractive"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": false}
+      },
+      "license": "Singapore Open Data License",
+      "flags": []
+    },
+    {
+      "name": "VietMed-Sum",
+      "url": "https://huggingface.co/datasets/leduckhai/VietMed-Sum",
+      "reference": ["le-duc_real-time_2024"],
+      "category": "Non-English",
+      "domain": "Medical conversations",
+      "languages": ["VI"],
+      "size": {
+        "raw": "16 hours",
+        "hours": 16
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["local & global"]
+      },
+      "modalities": {
+        "transcript": {"available": true, "method": "Manual"},
+        "audio": {"available": true, "distribution": "direct"},
+        "video": {"available": false}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["license_unknown"]
+    },
+
+    {
+      "name": "TweetSumm",
+      "url": "https://github.com/guyfe/Tweetsumm",
+      "reference": ["feigenblat_tweetsumm_2021"],
+      "category": "Chat-Based",
+      "domain": "Customer service chats (Twitter)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "1.1k dialogues",
+        "items": 1100,
+        "items_unit": "dialogues"
+      },
+      "summary_type": {
+        "styles": ["Abstractive", "Extractive"],
+        "details": ["multiple"]
+      },
+      "modalities": {
+        "transcript": {"available": false, "reason": "not_applicable_chat"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": "CDLA-Sharing-1.0",
+      "flags": []
+    },
+    {
+      "name": "CSDS",
+      "url": "https://github.com/xiaolinAndy/CSDS",
+      "reference": ["lin_csds_2021"],
+      "category": "Chat-Based",
+      "domain": "Customer service chats (JD.com)",
+      "languages": ["ZH"],
+      "size": {
+        "raw": "2.5k dialogues",
+        "items": 2500,
+        "items_unit": "dialogues"
+      },
+      "summary_type": {
+        "styles": ["Extractive", "Abstractive"],
+        "details": ["role-oriented", "topic-structured", "multiple"]
+      },
+      "modalities": {
+        "transcript": {"available": false, "reason": "not_applicable_chat"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["license_unknown"]
+    },
+    {
+      "name": "SAMSum",
+      "url": "https://huggingface.co/datasets/Samsung/samsum",
+      "reference": ["gliwa_samsum_2019"],
+      "category": "Chat-Based",
+      "domain": "Chat conversations (scenario-driven)",
+      "languages": ["EN"],
+      "size": {
+        "raw": "16k dialogues",
+        "items": 16000,
+        "items_unit": "dialogues"
+      },
+      "summary_type": {
+        "styles": ["Abstractive"]
+      },
+      "modalities": {
+        "transcript": {"available": false, "reason": "not_applicable_chat"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": "CC-BY-NC-ND-4.0",
+      "flags": []
+    },
+    {
+      "name": "MC",
+      "url": "https://github.com/synlp/HET-MC/tree/main/data_preprocessing",
+      "reference": ["song_etal_2020_summarizing"],
+      "category": "Chat-Based",
+      "domain": "Medical conversations (Chunyu Yisheng)",
+      "languages": ["ZH"],
+      "size": {
+        "raw": "16 hours",
+        "hours": 16
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["local & global"]
+      },
+      "modalities": {
+        "transcript": {"available": false, "reason": "not_applicable_chat"},
+        "audio": {"available": false},
+        "video": {"available": false}
+      },
+      "license": null,
+      "license_note": "No explicit license provided.",
+      "flags": ["license_unknown"]
+    }
+  ]
+}

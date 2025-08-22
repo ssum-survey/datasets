@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Summarization Datasets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .paper-info {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: left;
+            max-width: 980px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .paper-info h3 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .authors {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+            color: #374151;
+        }
+
+        .affiliations {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .paper-description {
+            color: #374151;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .paper-description p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .paper-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .paper-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .paper-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+        }
+
+        sup {
+            font-size: 0.7em;
+            vertical-align: super;
+        }
+
+        .controls {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-areas: 
+                "search filters"
+                "bottom-right bottom-right";
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .search-box {
+            grid-area: search;
+            min-width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e7ff;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+            height: 3.4em;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-group {
+            grid-area: filters;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .filter-select {
+            padding: 0.75rem;
+            border: 2px solid #e0e7ff;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 3.4em;
+            width: 180px;
+            box-sizing: border-box;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .multi-select {
+            position: relative;
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .multi-select-display {
+            padding: 0.75rem;
+            padding-right: 2.5rem;
+            border: 2px solid #e0e7ff;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+            min-height: 1.2em;
+            height: 3.4em;
+            box-sizing: border-box;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1em;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .multi-select-display:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .multi-select-display.open {
+            border-color: #e0e7ff;
+        }
+
+        .multi-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e0e7ff;
+            border-top: 1px solid #e0e7ff;
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            margin-top: 2px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .multi-select-dropdown.show {
+            display: block;
+        }
+
+        .multi-select-option {
+            padding: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+        }
+
+        .multi-select-option:hover {
+            background-color: #f8fafc;
+        }
+
+        .multi-select-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .multi-select-option label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .selected-tags {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .selected-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.25rem;
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .selected-tag .remove {
+            cursor: pointer;
+            font-weight: bold;
+            color: #6b7280;
+            margin-left: 0.25rem;
+        }
+
+        .selected-tag .remove:hover {
+            color: #dc2626;
+        }
+
+        .bottom-right {
+            grid-area: bottom-right;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .submit-dataset {
+            /* No grid-area needed, it's inside bottom-right */
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+
+        th {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th:last-child {
+            border-right: none;
+        }
+
+        th:hover {
+            background: linear-gradient(135deg, #4338ca 0%, #6b21a8 100%);
+            transform: translateY(-1px);
+        }
+
+        th .sort-icon {
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .dataset-name {
+            font-weight: 600;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .dataset-name:hover {
+            text-decoration: underline;
+        }
+
+        .citation-link {
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: normal;
+            font-size: 0.9rem;
+        }
+
+        .citation-link:hover {
+            color: #667eea;
+            text-decoration: underline;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .category-general {
+            background: #ddd6fe;
+            color: #6b46c1;
+        }
+
+        .category-non-english {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .category-chat-based {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .language-tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            margin: 0.1rem;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .size-info {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .modality {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.3rem 0.6rem;
+            margin: 0.1rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid;
+        }
+
+        .modality-available {
+            background: #dcfce7;
+            color: #166534;
+            border-color: #16a34a;
+        }
+
+        .modality-unavailable {
+            background: #fee2e2;
+            color: #991b1b;
+            border-color: #dc2626;
+        }
+
+        .modality-download {
+            background: #dbeafe;
+            color: #1d4ed8;
+            border-color: #3b82f6;
+        }
+
+        .modality-icon {
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .license-tag {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .license-tag.long {
+            white-space: normal;
+            word-break: break-word;
+            max-width: 120px;
+            line-height: 1.2;
+        }
+
+        .license-open {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .license-restricted {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .license-unknown {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .flag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            margin: 0.1rem;
+            background: #fef3c7;
+            color: #92400e;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 20;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "search"
+                    "filters"
+                    "bottom-right";
+            }
+            
+            .search-box {
+                min-width: auto;
+            }
+            
+            .filter-group {
+                justify-content: space-between;
+            }
+            
+            .filter-select, .multi-select {
+                width: 100%;
+                max-width: 180px;
+            }
+            
+            .bottom-right {
+                justify-content: center;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Speech Summarization Datasets</h1>
+            <p class="subtitle">Comprehensive collection of datasets for speech summarization research</p>
+            
+            <div class="paper-info">
+                <h3><em>Summarizing Speech: A Comprehensive Survey</em></h3>
+                <div class="authors">
+                    <strong>Authors:</strong> 
+                    Fabian Retkowski<sup>1</sup>, 
+                    Maike Züfle<sup>1</sup>, 
+                    Andreas Sudmann<sup>2</sup>, 
+                    Dinah Pfau<sup>3</sup>, 
+                    Shinji Watanabe<sup>4</sup>, 
+                    Jan Niehues<sup>1</sup>, 
+                    Alexander Waibel<sup>1,4</sup>
+                </div>
+                <div class="affiliations">
+                    <sup>1</sup>KIT, <sup>2</sup>University of Bonn, <sup>3</sup>Deutsches Museum, <sup>4</sup>CMU
+                </div>
+                <div class="paper-description">
+                    <p>This interactive table accompanies our comprehensive survey of speech summarization, a field at the intersection of speech recognition, text summarization, and domain-specific applications. Our work synthesizes recent developments from traditional cascaded systems to end-to-end approaches, while highlighting ongoing challenges in evaluation benchmarks, multilingual datasets, and long-context handling. We will continuously update the table below. Feel free to reach out to us using the green 'Submit Dataset' button for feedback and request for additions.</p>
+                </div>
+                <div class="paper-links">
+                    <a href="#" class="paper-link" target="_blank">📄 EMNLP 2025</a>
+                    <a href="https://arxiv.org/pdf/2504.08024" class="paper-link" target="_blank">📄 arXiv</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search datasets by name, domain, or description...">
+            </div>
+            <div class="filter-group">
+                <div class="multi-select" id="summaryTypeMultiSelect">
+                    <div class="multi-select-display" tabindex="0">
+                        <span class="placeholder">All Summary Types</span>
+                    </div>
+                    <div class="multi-select-dropdown">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+                    <div class="selected-tags" id="summaryTypeSelectedTags"></div>
+                </div>
+                <div class="multi-select" id="languageMultiSelect">
+                    <div class="multi-select-display" tabindex="0">
+                        <span class="placeholder">All Languages</span>
+                    </div>
+                    <div class="multi-select-dropdown">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+                    <div class="selected-tags" id="languageSelectedTags"></div>
+                </div>
+                <div class="multi-select" id="licenseMultiSelect">
+                    <div class="multi-select-display" tabindex="0">
+                        <span class="placeholder">All Licenses</span>
+                    </div>
+                    <div class="multi-select-dropdown">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+                    <div class="selected-tags" id="licenseSelectedTags"></div>
+                </div>
+                <select id="modalityFilter" class="filter-select">
+                    <option value="">All Modalities</option>
+                    <option value="transcript">With Transcript</option>
+                    <option value="audio">With Audio</option>
+                    <option value="video">With Video</option>
+                    <option value="chat-based">Chat-based</option>
+                    <option value="speech-audio">Transcript + Audio</option>
+                </select>
+            </div>
+            <div class="bottom-right">
+                <div class="stats">
+                    <span id="resultCount">Loading...</span>
+                </div>
+                <div class="submit-dataset">
+                    <a href="mailto:retkowski@kit.edu;maike.zuefle@kit.edu?subject=Dataset%20Submission%20for%20Speech%20Summarization%20Survey" class="submit-btn">
+                        ➕ Submit Dataset
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table id="datasetTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="name">Name <span class="sort-icon">↕</span></th>
+                            <th data-sort="domain">Domain <span class="sort-icon">↕</span></th>
+                            <th data-sort="summary_type">Summary Type <span class="sort-icon">↕</span></th>
+                            <th data-sort="languages">Lang. <span class="sort-icon">↕</span></th>
+                            <th data-sort="size">Size <span class="sort-icon">↕</span></th>
+                            <th data-sort="modalities">Modalities <span class="sort-icon">↕</span></th>
+                            <th data-sort="license">License <span class="sort-icon">↕</span></th>
+                            <th data-sort="flags">Status <span class="sort-icon">↕</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="datasetTableBody">
+                        <tr>
+                            <td colspan="8" class="loading">Loading datasets...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let datasets = [];
+        let filteredDatasets = [];
+        let currentSort = { column: 'name', direction: 'asc' };
+        let multiSelectFilters = {
+            summaryType: [],
+            language: [],
+            license: []
+        };
+        let bibtexEntries = {};
+
+        // Bibtex parsing function
+        function parseBibtex(bibtexText) {
+            const entries = {};
+            
+            // Clean up the bibtex text
+            const cleanText = bibtexText.replace(/\n\s+/g, ' ').replace(/\s+/g, ' ');
+            
+            // More flexible regex to match bibtex entries
+            const entryRegex = /@(\w+)\s*\{\s*([^,\s]+)\s*,\s*([\s\S]*?)\n\s*\}/g;
+            
+            let match;
+            while ((match = entryRegex.exec(bibtexText)) !== null) {
+                const [, type, key, content] = match;
+                const fields = {};
+                
+                // Parse fields with better handling of quoted strings and braces
+                const fieldRegex = /(\w+)\s*=\s*(?:["']([^"']*?)["']|\{([^}]*?)\}|([^,\n}]+))/g;
+                let fieldMatch;
+                while ((fieldMatch = fieldRegex.exec(content)) !== null) {
+                    const [, fieldName, quotedValue, bracedValue, plainValue] = fieldMatch;
+                    const fieldValue = quotedValue || bracedValue || plainValue;
+                    if (fieldValue) {
+                        fields[fieldName.toLowerCase()] = fieldValue.trim();
+                    }
+                }
+                
+                entries[key] = { type: type.toLowerCase(), fields };
+            }
+            
+            return entries;
+        }
+
+        // Generate citation from bibtex entry
+        function generateCitation(bibtexKey) {
+            const entry = bibtexEntries[bibtexKey];
+            if (!entry) return null;
+            
+            const fields = entry.fields;
+            let authors = '';
+            let year = fields.year || '';
+            let url = fields.url || '';
+            
+            // Parse authors
+            if (fields.author) {
+                const authorList = fields.author.split(' and ');
+                const cleanedAuthors = authorList.map(author => {
+                    // Handle "Last, First" format
+                    if (author.includes(',')) {
+                        return author.split(',')[0].trim();
+                    }
+                    // Handle "First Last" format - take the last word as surname
+                    const parts = author.trim().split(/\s+/);
+                    return parts[parts.length - 1];
+                });
+                
+                if (cleanedAuthors.length === 1) {
+                    authors = cleanedAuthors[0];
+                } else if (cleanedAuthors.length === 2) {
+                    authors = `${cleanedAuthors[0]} & ${cleanedAuthors[1]}`;
+                } else {
+                    authors = `${cleanedAuthors[0]} et al.`;
+                }
+            }
+            
+            const citation = `${authors} ${year}`;
+            return { citation, url };
+        }
+
+        // Load and initialize data
+        async function loadData() {
+            try {
+                // Load datasets
+                const datasetsResponse = await fetch('datasets.json');
+                const data = await datasetsResponse.json();
+                datasets = data.datasets;
+                filteredDatasets = [...datasets];
+                
+                // Load bibtex files
+                const [customBib, customManualBib] = await Promise.all([
+                    fetch('custom.bib').then(r => r.text()),
+                    fetch('custom_manual.bib').then(r => r.text())
+                ]);
+                
+                // Parse bibtex files
+                const customEntries = parseBibtex(customBib);
+                const customManualEntries = parseBibtex(customManualBib);
+                bibtexEntries = { ...customEntries, ...customManualEntries };
+                
+                populateFilters();
+                renderTable();
+                updateStats();
+                setupMultiSelectEvents();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('datasetTableBody').innerHTML = 
+                    '<tr><td colspan="8" class="no-results">Error loading data</td></tr>';
+            }
+        }
+
+        // Populate filter dropdowns
+        function populateFilters() {
+            const summaryTypes = [...new Set(datasets.flatMap(d => d.summary_type?.styles || []))].
+                sort();
+            const languages = [...new Set(datasets.flatMap(d => d.languages))].sort();
+            // Add special language options at the top, then sorted languages
+            const languageOptions = ['Multilingual', 'Non-English', ...languages];
+            const licenses = [...new Set(datasets.map(d => d.license).filter(Boolean))].sort();
+
+            populateMultiSelect('summaryTypeMultiSelect', summaryTypes, 'summaryType');
+            populateMultiSelect('languageMultiSelect', languageOptions, 'language');
+            populateMultiSelect('licenseMultiSelect', licenses, 'license');
+        }
+
+        function populateSelect(selectId, options) {
+            const select = document.getElementById(selectId);
+            const currentOptions = Array.from(select.options).slice(1).map(opt => opt.value);
+            
+            options.forEach(option => {
+                if (!currentOptions.includes(option)) {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    select.appendChild(optionElement);
+                }
+            });
+        }
+
+        function populateMultiSelect(containerId, options, filterKey) {
+            const container = document.getElementById(containerId);
+            const dropdown = container.querySelector('.multi-select-dropdown');
+            
+            dropdown.innerHTML = '';
+            options.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'multi-select-option';
+                optionDiv.innerHTML = `
+                    <input type="checkbox" id="${filterKey}_${option}" value="${option}">
+                    <label for="${filterKey}_${option}">${option}</label>
+                `;
+                dropdown.appendChild(optionDiv);
+                
+                const checkbox = optionDiv.querySelector('input');
+                checkbox.addEventListener('change', () => {
+                    handleMultiSelectChange(filterKey, option, checkbox.checked);
+                });
+            });
+        }
+
+        // Render table
+        function renderTable() {
+            const tbody = document.getElementById('datasetTableBody');
+            
+            if (filteredDatasets.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="no-results">No datasets match your filters</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filteredDatasets.map(dataset => `
+                <tr>
+                    <td>
+                        <a href="${dataset.url}" target="_blank" class="dataset-name">${dataset.name}</a>
+                        ${formatCitation(dataset.reference)}
+                    </td>
+                    <td>${dataset.domain}</td>
+                    <td>
+                        ${formatSummaryType(dataset.summary_type)}
+                    </td>
+                    <td>
+                        ${dataset.languages.map(lang => `<span class="language-tag">${lang}</span>`).join('')}
+                        ${dataset.language_notes ? `<div style="font-size: 0.7rem; color: #666; margin-top: 0.25rem; font-style: italic;">${dataset.language_notes}</div>` : ''}
+                    </td>
+                    <td class="size-info">
+                        ${formatSize(dataset.size)}
+                    </td>
+                    <td>
+                        ${formatModalities(dataset.modalities)}
+                    </td>
+                    <td>
+                        ${formatLicense(dataset.license, dataset.license_note)}
+                    </td>
+                    <td>
+                        ${dataset.flags.map(flag => `<span class="flag">${getFlagDescription(flag)}</span>`).join('')}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Helper functions
+        function formatCitation(references) {
+            if (!references || references.length === 0) return '';
+            
+            const citations = references.map(ref => {
+                const citationInfo = generateCitation(ref);
+                if (!citationInfo) return null;
+                
+                if (citationInfo.url) {
+                    return ` (<a href="${citationInfo.url}" target="_blank" class="citation-link">${citationInfo.citation}</a>)`;
+                } else {
+                    return ` (${citationInfo.citation})`;
+                }
+            }).filter(c => c !== null);
+            
+            return citations.join(', ');
+        }
+        
+        function formatSummaryType(summaryType) {
+            if (!summaryType) return 'N/A';
+            
+            let result = '';
+            if (summaryType.styles) {
+                result += summaryType.styles.join(', ');
+            }
+            if (summaryType.details && summaryType.details.length > 0) {
+                result += result ? '<br><small>(' : '<small>(';
+                result += summaryType.details.join(', ');
+                result += ')</small>';
+            }
+            
+            return result || 'N/A';
+        }
+
+        function formatSize(size) {
+            if (!size) return 'N/A';
+            
+            let result = `${size.raw}`;
+            
+            return result || 'N/A';
+        }
+
+        function formatModalities(modalities) {
+            return Object.entries(modalities).map(([type, info]) => {
+                const available = info.available;
+                let className, icon, statusText;
+                
+                if (!available) {
+                    className = 'modality-unavailable';
+                    icon = '✗';
+                    statusText = 'Not available';
+                } else if (info.distribution === 'links_or_script_only') {
+                    className = 'modality-download';
+                    icon = '↓';
+                    statusText = 'Only download links / script';
+                } else {
+                    className = 'modality-available';
+                    icon = '✓';
+                    statusText = 'Available';
+                }
+                
+                const text = type.charAt(0).toUpperCase() + type.slice(1);
+                let tooltip = `${text}: ${statusText}`;
+                if (available && info.method) tooltip += ` (${info.method})`;
+                if (!available && info.reason) tooltip += ` (${info.reason})`;
+                
+                return `<span class="modality ${className} tooltip" data-tooltip="${tooltip}"><span class="modality-icon">${icon}</span>${text}</span>`;
+            }).join('');
+        }
+
+        function formatLicense(license, licenseNote) {
+            if (!license) {
+                return `<span class="license-tag license-unknown tooltip" data-tooltip="${licenseNote || 'No license information available'}">Unknown</span>`;
+            }
+            
+            const isOpen = license.includes('CC') || license === 'MIT' || license === 'GPL-3.0';
+            const isPaid = license === 'Paid';
+            const className = isPaid ? 'license-restricted' : (isOpen ? 'license-open' : 'license-restricted');
+            const isLongLicense = license.length > 15;
+            const longClass = isLongLicense ? ' long' : '';
+            
+            return `<span class="license-tag ${className}${longClass}">${license}</span>`;
+        }
+
+        function getFlagDescription(flag) {
+            const descriptions = {
+                'unavailable_since_2024_12': 'Unavailable since 12/2024 due to widespread video removals',
+                'repro_docs_missing': 'Lacks documentation on included talks, hindering reproduction',
+                'repro_hard_ted_resources': 'Reproduction hindered; lacking documentation and TED is no longer using Amara',
+                'unavailable_since_2023_12': 'Unavailable since 12/2023 due to resource constraints',
+                'partial_partitions': 'Not all data partitions are available',
+                'partial_lang_transcripts_only': 'Partial language availability (only transcript translations)',
+                'partial_lang_summarys_only': 'Partial language availability (only summary translations)',
+                'license_unknown': 'No explicit license provided'
+            };
+            return descriptions[flag] || flag.replace(/_/g, ' ');
+        }
+
+        // Sorting
+        function sortData(column) {
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+
+            filteredDatasets.sort((a, b) => {
+                let aVal = a[column];
+                let bVal = b[column];
+
+                // Special handling for different data types
+                if (column === 'languages') {
+                    aVal = a[column].join(', ');
+                    bVal = b[column].join(', ');
+                } else if (column === 'summary_type') {
+                    aVal = (a[column]?.styles || []).join(', ');
+                    bVal = (b[column]?.styles || []).join(', ');
+                } else if (column === 'size') {
+                    aVal = a[column]?.items || 0;
+                    bVal = b[column]?.items || 0;
+                } else if (column === 'flags') {
+                    aVal = a[column].length;
+                    bVal = b[column].length;
+                }
+
+                if (typeof aVal === 'string') {
+                    aVal = aVal.toLowerCase();
+                    bVal = bVal.toLowerCase();
+                }
+
+                if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
+                if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            updateSortIcons();
+            renderTable();
+        }
+
+        function updateSortIcons() {
+            document.querySelectorAll('th .sort-icon').forEach(icon => {
+                icon.textContent = '↕';
+            });
+            
+            const activeHeader = document.querySelector(`th[data-sort="${currentSort.column}"] .sort-icon`);
+            if (activeHeader) {
+                activeHeader.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
+            }
+        }
+
+        // Multi-select handling
+        function handleMultiSelectChange(filterKey, value, isChecked) {
+            if (isChecked) {
+                if (!multiSelectFilters[filterKey].includes(value)) {
+                    multiSelectFilters[filterKey].push(value);
+                }
+            } else {
+                multiSelectFilters[filterKey] = multiSelectFilters[filterKey].filter(v => v !== value);
+            }
+            
+            updateMultiSelectDisplay(filterKey);
+            applyFilters();
+        }
+
+        function updateMultiSelectDisplay(filterKey) {
+            const containerMap = {
+                'summaryType': 'summaryTypeMultiSelect',
+                'language': 'languageMultiSelect',
+                'license': 'licenseMultiSelect'
+            };
+            
+            const tagContainerMap = {
+                'summaryType': 'summaryTypeSelectedTags',
+                'language': 'languageSelectedTags',
+                'license': 'licenseSelectedTags'
+            };
+
+            const placeholderMap = {
+                'summaryType': 'All Summary Types',
+                'language': 'All Languages',
+                'license': 'All Licenses'
+            };
+
+            const container = document.getElementById(containerMap[filterKey]);
+            const placeholder = container.querySelector('.placeholder');
+            const tagContainer = document.getElementById(tagContainerMap[filterKey]);
+
+            if (multiSelectFilters[filterKey].length === 0) {
+                placeholder.textContent = placeholderMap[filterKey];
+                tagContainer.innerHTML = '';
+            } else {
+                placeholder.textContent = `${multiSelectFilters[filterKey].length} selected`;
+                
+                tagContainer.innerHTML = multiSelectFilters[filterKey].map(value => `
+                    <span class="selected-tag">
+                        ${value}
+                        <span class="remove" onclick="removeMultiSelectValue('${filterKey}', '${value}')">×</span>
+                    </span>
+                `).join('');
+            }
+        }
+
+        function removeMultiSelectValue(filterKey, value) {
+            multiSelectFilters[filterKey] = multiSelectFilters[filterKey].filter(v => v !== value);
+            
+            // Uncheck the corresponding checkbox
+            const containerMap = {
+                'summaryType': 'summaryTypeMultiSelect',
+                'language': 'languageMultiSelect',
+                'license': 'licenseMultiSelect'
+            };
+            
+            const container = document.getElementById(containerMap[filterKey]);
+            const checkbox = container.querySelector(`input[value="${value}"]`);
+            if (checkbox) {
+                checkbox.checked = false;
+            }
+            
+            updateMultiSelectDisplay(filterKey);
+            applyFilters();
+        }
+
+        // Filtering
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const modalityFilter = document.getElementById('modalityFilter').value;
+
+            filteredDatasets = datasets.filter(dataset => {
+                // Search filter
+                const searchMatch = !searchTerm || 
+                    dataset.name.toLowerCase().includes(searchTerm) ||
+                    dataset.domain.toLowerCase().includes(searchTerm) ||
+                    (dataset.summary_type?.styles || []).some(style => style.toLowerCase().includes(searchTerm)) ||
+                    (dataset.summary_type?.details || []).some(detail => detail.toLowerCase().includes(searchTerm));
+
+                // Summary type multi-select filter
+                const summaryTypeMatch = multiSelectFilters.summaryType.length === 0 || 
+                    (dataset.summary_type?.styles || []).some(style => multiSelectFilters.summaryType.includes(style));
+
+                // Language multi-select filter
+                let languageMatch = true;
+                if (multiSelectFilters.language.length > 0) {
+                    languageMatch = multiSelectFilters.language.some(langFilter => {
+                        if (langFilter === 'Multilingual') {
+                            return dataset.languages.length > 1;
+                        } else if (langFilter === 'Non-English') {
+                            return dataset.languages.some(lang => lang !== 'EN');
+                        } else {
+                            return dataset.languages.includes(langFilter);
+                        }
+                    });
+                }
+
+                // License multi-select filter
+                const licenseMatch = multiSelectFilters.license.length === 0 || 
+                    multiSelectFilters.license.includes(dataset.license);
+
+                // Modality filter
+                let modalityMatch = true;
+                if (modalityFilter) {
+                    if (modalityFilter === 'chat-based') {
+                        modalityMatch = dataset.category === 'Chat-Based';
+                    } else if (modalityFilter === 'speech-audio') {
+                        modalityMatch = dataset.modalities['transcript']?.available === true && 
+                                      dataset.modalities['audio']?.available === true;
+                    } else {
+                        modalityMatch = dataset.modalities[modalityFilter]?.available === true;
+                    }
+                }
+
+                return searchMatch && summaryTypeMatch && languageMatch && licenseMatch && modalityMatch;
+            });
+
+            renderTable();
+            updateStats();
+        }
+
+        function updateStats() {
+            const total = datasets.length;
+            const showing = filteredDatasets.length;
+            document.getElementById('resultCount').textContent = `${showing} of ${total} datasets`;
+        }
+
+        // Multi-select dropdown toggle
+        function setupMultiSelectEvents() {
+            ['summaryTypeMultiSelect', 'languageMultiSelect', 'licenseMultiSelect'].forEach(id => {
+                const container = document.getElementById(id);
+                const display = container.querySelector('.multi-select-display');
+                const dropdown = container.querySelector('.multi-select-dropdown');
+
+                display.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    
+                    // Close other dropdowns
+                    document.querySelectorAll('.multi-select-dropdown.show').forEach(d => {
+                        if (d !== dropdown) {
+                            d.classList.remove('show');
+                            d.parentElement.querySelector('.multi-select-display').classList.remove('open');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('show');
+                    display.classList.toggle('open');
+                });
+
+                // Prevent dropdown from closing when clicking inside
+                dropdown.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', () => {
+                document.querySelectorAll('.multi-select-dropdown.show').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                    dropdown.parentElement.querySelector('.multi-select-display').classList.remove('open');
+                });
+            });
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('modalityFilter').addEventListener('change', applyFilters);
+
+        document.querySelectorAll('th[data-sort]').forEach(header => {
+            header.addEventListener('click', () => {
+                sortData(header.dataset.sort);
+            });
+        });
+
+        // Initialize
+        loadData();
+    </script>
+</body>
+</html>
