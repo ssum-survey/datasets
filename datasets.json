@@ -839,6 +839,30 @@
       "license": null,
       "license_note": "No explicit license provided.",
       "flags": ["license_unknown"]
+    },
+    {
+      "name": "FLORAS 50",
+      "url": "https://huggingface.co/datasets/espnet/floras",
+      "reference": ["floras50"],
+      "category": "General",
+      "domain": "YouTube videos (various types/topics)",
+      "languages": ["50"],
+      "size": {
+        "raw": "9.3k hours",
+        "hours": 9300
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["synthetic LLM summaries"]
+      },
+      "modalities": {
+        "transcript": {"available": true},
+        "audio": {"available": true},
+        "video": {"available": false}
+      },
+      "license": "CC-BY-3.0",
+      "flags": []
     }
   ]
 }
+
