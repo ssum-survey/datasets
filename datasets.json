@@ -862,6 +862,31 @@
       },
       "license": "CC-BY-3.0",
       "flags": []
+    },
+    {
+      "name": "InCroMin",
+      "url": "https://ufal.mff.cuni.cz/elitr-minuting-corpus",
+      "reference": ["incromin"],
+      "category": "Non-English",
+      "domain": "Cross-lingual meetings (on Fairmeeting, mostly naturalistic)",
+      "languages": ["CS", "CMN", "VI", "UK", "SK", "RU", "PT", "MR", "IT", "FR"],
+      "size": {
+        "raw": "14 meetings (5 hours)",
+        "items": 14,
+        "items_unit": "meetings",
+        "hours": 5
+      },
+      "summary_type": {
+        "styles": ["Abstractive"],
+        "details": ["minutes"]
+      },
+      "modalities": {
+        "transcript": {"available": true},
+        "audio": {"available": true},
+        "video": {"available": false}
+      },
+      "license": "CC-BY-4.0",
+      "flags": []
     }
   ]
 }

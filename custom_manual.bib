@@ -44,6 +44,23 @@
     abstract = "Controllable summarization allows users to generate customized summaries with specified attributes. However, due to the lack of designated annotations of controlled summaries, existing work has to craft pseudo datasets by adapting generic summarization benchmarks. Furthermore, most research focuses on controlling single attributes individually (e.g., a short summary or a highly abstractive summary) rather than controlling a mix of attributes together (e.g., a short and highly abstractive summary). In this paper, we propose MACSum, the first human-annotated summarization dataset for controlling mixed attributes. It contains source texts from two domains, news articles and dialogues, with human-annotated summaries controlled by five designed attributes (Length, Extractiveness, Specificity, Topic, and Speaker). We propose two simple and effective parameter-efficient approaches for the new task of mixed controllable summarization based on hard prompt tuning and soft prefix tuning. Results and analysis demonstrate that hard prompt models yield the best performance on most metrics and human evaluations. However, mixed-attribute control is still challenging for summarization tasks. Our dataset and code are available at https://github.com/psunlpgroup/MACSum."
 }
 
+@inproceedings{incromin,
+author = {Čechovič, Marko and Komorníková, Natália and Macháček, Dominik and Bojar, Ondrej},
+title = {Corpus of&nbsp;Cross-Lingual Dialogues with&nbsp;Minutes and&nbsp;Detection of&nbsp;Misunderstandings},
+year = {2025},
+isbn = {978-3-032-02550-0},
+publisher = {Springer-Verlag},
+address = {Berlin, Heidelberg},
+url = {https://doi.org/10.1007/978-3-032-02551-7_26},
+doi = {10.1007/978-3-032-02551-7_26},
+abstract = {Speech processing and translation technology have the potential to facilitate meetings of individuals who do not share any common language. To evaluate automatic systems for such a task, a versatile and realistic evaluation corpus is needed. Therefore, we create and present a corpus of cross-lingual dialogues between individuals without a common language who were facilitated by automatic simultaneous speech translation. The corpus consists of 5&nbsp;h of speech recordings with ASR and gold transcripts in 12 original languages and automatic and corrected translations into English. For the purposes of research into cross-lingual summarization, our corpus also includes written summaries (minutes) of the meetings.Moreover, we propose automatic detection of misunderstandings. For an overview of this task and its complexity, we attempt to quantify misunderstandings in cross-lingual meetings. We annotate misunderstandings manually and also test the ability of current large language models to detect them automatically. The results show that the Gemini model is able to identify text spans with misunderstandings with recall of 77\% and precision of 47\%.},
+booktitle = {Text, Speech, and Dialogue: 28th International Conference, TSD 2025, Erlangen, Germany, August 25–28, 2025, Proceedings, Part II},
+pages = {301–312},
+numpages = {12},
+keywords = {Speech Translation, Cross-Lingual Dialogues, Minuting},
+location = {Erlangen, Germany}
+}
+
 @misc{papi2025mcifmultimodalcrosslingualinstructionfollowing,
       title={MCIF: Multimodal Crosslingual Instruction-Following Benchmark from Scientific Talks}, 
       author={Sara Papi and Maike Züfle and Marco Gaido and Beatrice Savoldi and Danni Liu and Ioannis Douros and Luisa Bentivogli and Jan Niehues},
